@@ -1,0 +1,20 @@
+{
+    "extensionName": {"message": "Outlook 邮件检查器"},
+    "extensionDescription": {"message": "移除广告并增强 Outlook 网页邮箱"},
+    
+    "ads_text": {"message": "广告"},
+    "cfg_hide_left_rail": {"message": "隐藏左侧边栏"},
+    "cfg_hide_firstemail_ad": {"message": "隐藏首封邮件广告"},
+    "cfg_hide_top_icons": {"message": "隐藏 Meet、Teams、OneNote 图标"},
+
+    "extras_text": {"message": "增强功能"},
+    "cfg_outlook_logo": {"message": "Outlook+ Logo"},
+    "cfg_email_counter": {"message": "邮件计数器"},
+    "cfg_align_title_folder": {"message": "对齐文件夹标题"},
+    "cfg_custom_background": {"message": "背景主题 URL"},
+    "cfg_transparency_topbar": {"message": "顶栏透明度"},
+    "cfg_support_rate_topbar": {"message": "支持和评分按钮"},
+
+    "cfg_open_outlook": {"message": "打开 Outlook"},
+    "cfg_open_calendar": {"message": "打开日历"}
+}

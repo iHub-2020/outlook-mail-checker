@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Outlook Mail Checker</title>
+    <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+    <div id="container">
+        <div id="header">
+            <img src="../icons/mop48.png" alt="Outlook Web Plus icon">
+            <h1>Outlook <span class="blue">Web Plus</span><sup>+</sup></h1>
+        </div>
+
+        <div id="topButtons">
+            <button id="openOutlook" class="mainButton">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                    <polyline points="22,6 12,13 2,6"></polyline>
+                </svg>
+                <span data-i18n="openOutlook">Open Outlook</span>
+            </button>
+            
+            <button id="openCalendar" class="mainButton">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                    <line x1="16" y1="2" x2="16" y2="6"></line>
+                    <line x1="8" y1="2" x2="8" y2="6"></line>
+                    <line x1="3" y1="10" x2="21" y2="10"></line>
+                </svg>
+                <span data-i18n="openCalendar">Open Calendar</span>
+            </button>
+        </div>
+
+        <div id="topButtonsContainer">
+            <div id="topButtonsOutlook" onclick="window.open('https://github.com/iHub-2020/Outlook-mail-checker', '_blank')" title="Outlook Mail Checker" class="topButton">
+                <img class="git" src="../icons/github_icon.svg">
+            </div>
+            <div id="topButtonsCalendar" onclick="window.open('https://github.com/iHub-2020/Outlook-mail-checker/issues', '_blank')" title="Report Issue" class="topButton">
+                <img class="git" src="../icons/stars_rating.png">
+            </div>
+        </div>
+
+        <div class="section">
+            <h2 data-i18n="adsSection">Ads</h2>
+            
+            <div class="option">
+                <label>
+                    <input type="checkbox" id="hideFirstEmailAd">
+                    <span data-i18n="hideFirstEmailAd">Hide First Email Ad</span>
+                </label>
+            </div>
+            
+            <div class="option">
+                <label>
+                    <input type="checkbox" id="hideTopIcons">
+                    <span data-i18n="hideTopIcons">Hide Meet, Teams, OneNote icons</span>
+                </label>
+            </div>
+            
+            <div class="option">
+                <label>
+                    <input type="checkbox" id="hideLeftRail">
+                    <span data-i18n="hideLeftRail">Hide Left Rail</span>
+                </label>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2 data-i18n="extrasSection">Extras</h2>
+            
+            <div class="option">
+                <label>
+                    <input type="checkbox" id="addEmailCalculator">
+                    <span data-i18n="emailCounter">Email counter</span>
+                </label>
+                <input type="text" id="emailsText" class="text-input" maxlength="15">
+            </div>
+            
+            <div class="option">
+                <label>
+                    <input type="checkbox" id="alignTitle">
+                    <span data-i18n="alignTitleFolder">Align title folder</span>
+                </label>
+            </div>
+            
+            <div class="option">
+                <label>
+                    <input type="checkbox" id="addCustomBackground">
+                    <span data-i18n="backgroundTheme">Background Theme URL</span>
+                </label>
+                <input type="text" id="customBackground" class="text-input" placeholder="https://example.com/image.jpg">
+            </div>
+            
+            <div class="option">
+                <label>
+                    <input type="checkbox" id="topbarTransparency">
+                    <span data-i18n="topbarTransparency">Topbar transparency</span>
+                </label>
+            </div>
+            
+            <div class="option">
+                <label>
+                    <input type="checkbox" id="supportButton">
+                    <span data-i18n="supportButton">Support and rating Button</span>
+                </label>
+            </div>
+        </div>
+
+        <div id="footer">
+            <span data-i18n="version">x.x.x</span>
+        </div>
+    </div>
+
+    <script src="popup.js"></script>
+</body>
+</html>
