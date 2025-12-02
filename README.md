@@ -6,7 +6,7 @@
 
 <a name="english"></a>
 
-## 🇬🇧 English
+## English
 
 **Remove ads and improve Outlook's web mailbox.**
 
@@ -64,7 +64,7 @@ Based on [Outlook Web Plus](https://github.com/rztprog/outlook-web-plus) by Rztp
 
 <a name="中文"></a>
 
-## 🇨🇳 中文
+## 中文
 
 **移除广告并优化 Outlook 网页版邮箱体验。**
 
