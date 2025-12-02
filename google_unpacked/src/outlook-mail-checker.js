@@ -23,7 +23,7 @@ let emailCalculatorColor = '#C00000';
 let alignTitle = true;
 let addcustomBackground = true; // [保留] 背景图开关
 // 默认背景图 (支持 GIF)
-let customBackground = 'https://raw.githubusercontent.com/iHub-2020/outlook-mail-checker/main/google_unpacked/icons/banner_background.jpg';
+let customBackground = 'https://raw.githubusercontent.com/iHub-2020/outlook-mail-checker/main/google_unpacked/icons/banner_background.png';
 let topbarTransparency = true;
 
 // ==================== 初始化 ====================
@@ -189,3 +189,4 @@ const topbarTransparencyChanger = () => {
         }
     }
 }
+
