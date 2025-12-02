@@ -2,19 +2,22 @@
     "extensionName": {"message": "Outlook Mail Checker"},
     "extensionDescription": {"message": "Remove ads and enhance Outlook web mailbox"},
     
-    "ads_text": {"message": "Ads"},
-    "cfg_hide_left_rail": {"message": "Hide Left Rail"},
-    "cfg_hide_firstemail_ad": {"message": "Hide First Email Ad"},
-    "cfg_hide_top_icons": {"message": "Hide Meet, Teams, OneNote icons"},
+    "btn_open_outlook": {"message": "Open Outlook"},
+    "btn_open_calendar": {"message": "Open Calendar"},
 
-    "extras_text": {"message": "Extras"},
-    "cfg_outlook_logo": {"message": "Outlook+ Logo"},
-    "cfg_email_counter": {"message": "Email counter"},
-    "cfg_align_title_folder": {"message": "Align folder title"},
-    "cfg_custom_background": {"message": "Background Theme URL"},
-    "cfg_transparency_topbar": {"message": "Topbar transparency"},
-    "cfg_support_rate_topbar": {"message": "Support and rating Button"},
+    "section_ads": {"message": "Ads Blocker"},
+    "lbl_hide_first_ad": {"message": "Delete First Email Ad"},
+    "lbl_hide_meet_icons": {"message": "Hide Meet, Teams icons"},
+    "lbl_hide_left_rail": {"message": "Hide Left Rail"},
 
-    "cfg_open_outlook": {"message": "Open Outlook"},
-    "cfg_open_calendar": {"message": "Open Calendar"}
+    "section_extras": {"message": "Extras"},
+    "lbl_email_counter": {"message": "Email counter & Color"},
+    "lbl_align_title": {"message": "Align folder title"},
+    "lbl_bg_theme": {"message": "Background Theme URL"},
+    "lbl_transparency": {"message": "Topbar transparency"},
+    "lbl_support_rate": {"message": "Support and rating Button"},
+
+    "footer_github": {"message": "GitHub"},
+    "footer_rate": {"message": "Rate"},
+    "footer_version": {"message": "Ver"}
 }
