@@ -1,3 +1,13 @@
+/*
+ * ================================================================
+ * Outlook Mail Checker - Popup Styles
+ * Version: 1.0.2
+ * Author: Reyanmatic
+ * Date: 2025-12-02
+ * Description: Stylesheet for the extension popup window.
+ * ================================================================
+ */
+
 :root {
     --bg-color: #ffffff;
     --text-color: #333333;
@@ -9,6 +19,8 @@
     --secondary-color: #666666;
     --input-bg: #ffffff;
     --input-border: #ccc;
+    /* [优化] 新增按钮悬停背景变量 */
+    --btn-hover-bg: rgba(0, 0, 0, 0.1);
 }
 
 /* 深色模式变量 */
@@ -23,6 +35,8 @@ body.dark-mode {
     --secondary-color: #aaaaaa;
     --input-bg: #404040;
     --input-border: #555555;
+    /* [优化] 深色模式下的按钮悬停背景 */
+    --btn-hover-bg: rgba(255, 255, 255, 0.1);
 }
 
 * {
@@ -80,12 +94,9 @@ body {
     transition: background 0.2s;
 }
 
+/* [优化] 使用变量替代硬编码，删除了原本针对 body.dark-mode .icon-btn:hover 的冗余规则 */
 .icon-btn:hover {
-    background-color: rgba(0,0,0,0.1);
-}
-
-body.dark-mode .icon-btn:hover {
-    background-color: rgba(255,255,255,0.1);
+    background-color: var(--btn-hover-bg);
 }
 
 /* Buttons */
@@ -234,4 +245,15 @@ footer {
 .footer-icon {
     width: 14px;
     height: 14px;
+}
+
+/* 
+   ================================================================
+   [Fix] 修复部分 - Added by Code Assistant
+   ================================================================
+*/
+
+/* 修复：确保语言切换按钮在黑夜模式下可见 */
+body.dark-mode #toggle-lang {
+    color: #ffffff !important; 
 }
