@@ -5,7 +5,7 @@
     "btn_open_outlook": {"message": "Open Outlook"},
     "btn_open_calendar": {"message": "Open Calendar"},
 
-    "section_ads": {"message": "Ads Blocker"},
+    "section_ads": {"message": "Hide Switch"},
     "lbl_hide_first_ad": {"message": "Delete First Email Ad"},
     "lbl_hide_meet_icons": {"message": "Hide Meet, Teams icons"},
     "lbl_hide_left_rail": {"message": "Hide Left Rail"},
