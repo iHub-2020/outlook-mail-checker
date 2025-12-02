@@ -1,10 +1,11 @@
 /**
  * ================================================================
  * Outlook Mail Checker - Content Script
- * Version: 1.0.3
+ * Version: 1.2.0
  * Author: Reyanmatic
- * Date: 2025-12-02
+ * Date: 2025-12-03
  * Description: Main logic for modifying Outlook interface.
+ * Update: Version bump.
  * ================================================================
  */
 
@@ -16,13 +17,13 @@ let startTimer = null;
 // 默认设置
 let hideLeftRail = true;
 let hideTopIcons = true;
-let hideFirstemailAd = true;
+// [已移除] let hideFirstemailAd = true; 
 let addEmailCalculator = true;
 let emailCalculatorColor = '#C00000';
 let alignTitle = true;
-let addcustomBackground = true;
+let addcustomBackground = true; // [保留] 背景图开关
 // 默认背景图 (支持 GIF)
-let customBackground = 'https://raw.githubusercontent.com/iHub-2020/outlook-mail-checker/main/google_unpacked/icons/background_stars.jpg';
+let customBackground = 'https://raw.githubusercontent.com/iHub-2020/outlook-mail-checker/main/google_unpacked/icons/banner_background.jpg';
 let topbarTransparency = true;
 
 // ==================== 初始化 ====================
@@ -35,7 +36,8 @@ const start = async () => {
         
         if (document.querySelector('[role="navigation"]')) {
              clearInterval(startTimer);
-             injectCustomStyles(); 
+             // [已修改] 不再需要注入隐藏广告的 CSS
+             // injectCustomStyles(); 
         }
 
         runAllChecks();
@@ -49,13 +51,12 @@ const start = async () => {
 
 const runAllChecks = () => {
     cleanLeftRail();
-    removeAdsAndUpgradeEmails(); 
+    // [已移除] removeAdsAndUpgradeEmails(); 
     cleanTopBarIcons();
     emailCalculator(); 
     alignFolderTitle();
     backgroundChanger();
     topbarTransparencyChanger();
-    // [已删除] addSupportAndRate(); 
 }
 
 startTimer = setInterval(start, 500);
@@ -69,19 +70,18 @@ chrome.storage.onChanged.addListener(function (changes) {
     switch (key) {
         case 'hideLeftRail': hideLeftRail = val; cleanLeftRail(); break;
         case 'hideTopIcons': hideTopIcons = val; cleanTopBarIcons(); break;
-        case 'hideFirstemailAd': hideFirstemailAd = val; removeAdsAndUpgradeEmails(); injectCustomStyles(); break;
+        // [已移除] case 'hideFirstemailAd': ...
         case 'addEmailCalculator': addEmailCalculator = val; emailCalculator(); break;
         case 'emailCalculatorColor': emailCalculatorColor = val; emailCalculator(); break;
         case 'alignTitle': alignTitle = val; alignFolderTitle(); break;
         case 'addcustomBackground': addcustomBackground = val; backgroundChanger(); break;
         case 'customBackground': customBackground = val; backgroundChanger(); break;
         case 'topbarTransparency': topbarTransparency = val; topbarTransparencyChanger(); break;
-        // [已删除] case 'supportAndRateButton': ...
     }
 })
 
 const loadVariables = (value) => {
-    hideFirstemailAd = value.hideFirstemailAd ?? hideFirstemailAd;
+    // [已移除] hideFirstemailAd = value.hideFirstemailAd ?? hideFirstemailAd;
     hideLeftRail = value.hideLeftRail ?? hideLeftRail;
     hideTopIcons = value.hideTopIcons ?? hideTopIcons;
     addEmailCalculator = value.addEmailCalculator ?? addEmailCalculator;
@@ -89,84 +89,15 @@ const loadVariables = (value) => {
     addcustomBackground = value.addcustomBackground ?? addcustomBackground;
     customBackground = value.customBackground ?? customBackground;
     topbarTransparency = value.topbarTransparency ?? topbarTransparency;
-    // [已删除] supportAndRateButton
     emailCalculatorColor = value.emailCalculatorColor || '#C00000';
 }
 
-// ==================== CSS 辅助 ====================
-const injectCustomStyles = () => {
-    const styleId = 'outlook-plus-styles';
-    let styleEl = document.getElementById(styleId);
-    
-    if (!styleEl) {
-        styleEl = document.createElement('style');
-        styleEl.id = styleId;
-        document.head.appendChild(styleEl);
-    }
+// ==================== [已移除] CSS 辅助 ====================
+// 原 injectCustomStyles 函数主要用于隐藏广告 rail，现已移除。
+// 如果未来需要其他全局 CSS，可重新启用。
 
-    if (hideFirstemailAd) {
-        styleEl.textContent = `
-            #OwaContainer, [data-test-id="ad-rail"], ._1_... { display: none !important; }
-        `;
-    } else {
-        styleEl.textContent = '';
-    }
-};
-
-// ==================== 核心：强力删除广告 ====================
-const removeAdsAndUpgradeEmails = () => {
-    if (!hideFirstemailAd) return;
-
-    const mailList = document.querySelector('[role="listbox"]') || document.getElementById('MainModule');
-    if (!mailList) return;
-
-    const rows = mailList.querySelectorAll('[role="option"], [draggable="true"]');
-
-    rows.forEach(row => {
-        if (row.style.display === 'none') return;
-
-        const text = row.innerText || "";
-        let isAd = false;
-
-        if (text.includes("Upgrade Your Account") || 
-            text.includes("升级你的帐户") || 
-            text.includes("Get the latest premium")) {
-            isAd = true;
-        }
-
-        if (!isAd) {
-            const spans = row.querySelectorAll('span, div');
-            for (let span of spans) {
-                const spanText = span.innerText.trim();
-                if ((spanText === "Ad" || spanText === "广告") && spanText.length === text.length) {
-                }
-                if (/^(Ad|广告)$/.test(spanText)) {
-                    if (row.getAttribute('aria-label')?.includes('Upgrade') || text.includes('Microsoft')) {
-                        isAd = true;
-                        break;
-                    }
-                    if (text.includes("Microsoft Outlook")) {
-                         isAd = true;
-                         break;
-                    }
-                }
-            }
-        }
-
-        if (isAd) {
-            row.style.display = 'none';
-            row.style.visibility = 'hidden';
-            row.setAttribute('data-outlook-plus-hidden', 'true');
-        }
-    });
-
-    const topBanners = document.querySelectorAll('div[aria-label*="Upgrade"], div[aria-label*="升级"]');
-    topBanners.forEach(banner => {
-        if (banner.getAttribute('role') !== 'button' && !banner.querySelector('input')) {
-            banner.style.display = 'none';
-        }
-    });
-}
+// ==================== [已移除] 核心：强力删除广告 ====================
+// 原 removeAdsAndUpgradeEmails 函数已彻底删除。
 
 // ==================== 计数器与颜色 ====================
 const emailCalculator = () => {
@@ -235,6 +166,7 @@ const cleanTopBarIcons = () => {
 const backgroundChanger = () => {
     const backgroundNav = document.getElementById('O365_NavHeader') || document.querySelector('.o365sx-navbar') || document.querySelector('[role="banner"]');
     if (backgroundNav) {
+        // [逻辑保留] 只有当开关打开 (addcustomBackground) 且有 URL 时才应用
         if (addcustomBackground && customBackground) {
             backgroundNav.style.setProperty('background-image', `url("${customBackground}")`, 'important');
             backgroundNav.style.backgroundPosition = 'center';
