@@ -145,7 +145,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
         // Background URL Input
         const bgInput = document.getElementById('customBackground');
-        const defaultBgUrl = 'https://raw.githubusercontent.com/iHub-2020/outlook-mail-checker/main/google_unpacked/icons/banner_background.jpg';
+        const defaultBgUrl = 'https://raw.githubusercontent.com/iHub-2020/outlook-mail-checker/main/google_unpacked/icons/banner_background.png';
         
         if (bgInput) {
             bgInput.value = result.customBackground || defaultBgUrl;
@@ -162,3 +162,4 @@ document.addEventListener('DOMContentLoaded', function () {
         versionDiv.textContent = `v${manifestData.version}`;
     }
 });
+
