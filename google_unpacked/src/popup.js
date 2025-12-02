@@ -1,10 +1,11 @@
 /**
  * ================================================================
  * Outlook Mail Checker - Popup Script
- * Version: 1.0.3
+ * Version: 1.2.0
  * Author: Reyanmatic
- * Date: 2025-12-02
+ * Date: 2025-12-03
  * Description: Script for handling popup interactions and settings.
+ * Update: Version bump.
  * ================================================================
  */
 
@@ -14,32 +15,30 @@ const i18nDict = {
     zh: {
         btn_open_outlook: "打开 Outlook",
         btn_open_calendar: "打开日历",
-        section_ads: "广告拦截",
-        lbl_hide_first_ad: "隐藏首封邮件广告 (升级提示)",
+        section_hides: "隐藏开关",
+        // [已移除] lbl_hide_first_ad
         lbl_hide_meet_icons: "隐藏 Meet, Teams, OneNote 图标",
         lbl_hide_left_rail: "隐藏左侧应用侧边栏",
         section_extras: "增强功能",
         lbl_email_counter: "未读邮件计数器及颜色",
         lbl_align_title: "左侧文件夹标题对齐",
-        lbl_bg_theme: "顶栏背景图片 URL (支持 GIF)", // [更新] 提示支持 GIF
+        lbl_bg_theme: "顶栏背景图片 URL (支持 GIF)", 
         lbl_transparency: "顶栏半透明效果",
-        // [已删除] lbl_support_rate
         footer_github: "GitHub",
         footer_rate: "评分"
     },
     en: {
         btn_open_outlook: "Open Outlook",
         btn_open_calendar: "Open Calendar",
-        section_ads: "Ads Blocker",
-        lbl_hide_first_ad: "Hide First Email Ad",
+        section_hides: "Hide Switch",
+        // [Removed] lbl_hide_first_ad
         lbl_hide_meet_icons: "Hide Meet, Teams icons",
         lbl_hide_left_rail: "Hide Left Rail",
         section_extras: "Extras",
         lbl_email_counter: "Email counter & Color",
         lbl_align_title: "Align folder title",
-        lbl_bg_theme: "Background Theme URL (GIF supported)", // [更新]
+        lbl_bg_theme: "Background Theme URL (GIF supported)",
         lbl_transparency: "Topbar transparency",
-        // [已删除] lbl_support_rate
         footer_github: "GitHub",
         footer_rate: "Rate"
     }
@@ -114,14 +113,13 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // ==================== 4. 功能设置同步 ====================
     const checkboxIds = [
-        'hideFirstemailAd',
+        // [已移除] 'hideFirstemailAd', 
         'hideTopIcons',
         'hideLeftRail',
         'addEmailCalculator',
         'alignTitle',
-        'addcustomBackground',
+        'addcustomBackground', // [保留] 这是你要求的背景图开关
         'topbarTransparency'
-        // [已删除] 'supportAndRateButton'
     ];
 
     chrome.storage.local.get(null, (result) => {
@@ -147,7 +145,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
         // Background URL Input
         const bgInput = document.getElementById('customBackground');
-        const defaultBgUrl = 'https://raw.githubusercontent.com/iHub-2020/outlook-mail-checker/main/google_unpacked/icons/background_stars.jpg';
+        const defaultBgUrl = 'https://raw.githubusercontent.com/iHub-2020/outlook-mail-checker/main/google_unpacked/icons/banner_background.jpg';
         
         if (bgInput) {
             bgInput.value = result.customBackground || defaultBgUrl;
