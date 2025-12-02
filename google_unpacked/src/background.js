@@ -1,11 +1,11 @@
 /**
  * ================================================================
- * Outlook Mail Checker - Background Script (增强版)
- * ================================================================
- * 新增功能：
- * 1. 定时检查未读邮件（每5分钟）
- * 2. 浏览器启动时自动检查
- * 3. 缓存最新计数，即使关闭浏览器也能恢复
+ * Outlook Mail Checker - Background Script
+ * Version: 1.2.0
+ * Author: Reyanmatic
+ * Date: 2025-12-03
+ * Description: Background service worker for mail checking & alarms.
+ * Update: Added file header & version bump.
  * ================================================================
  */
 
