@@ -1,10 +1,11 @@
 /*
  * ================================================================
  * Outlook Mail Checker - Popup Styles
- * Version: 1.0.2
+ * Version: 1.2.0
  * Author: Reyanmatic
  * Date: 2025-12-02
  * Description: Stylesheet for the extension popup window.
+ * Update: Added SVG icon support for footer.
  * ================================================================
  */
 
@@ -19,7 +20,6 @@
     --secondary-color: #666666;
     --input-bg: #ffffff;
     --input-border: #ccc;
-    /* [优化] 新增按钮悬停背景变量 */
     --btn-hover-bg: rgba(0, 0, 0, 0.1);
 }
 
@@ -35,7 +35,6 @@ body.dark-mode {
     --secondary-color: #aaaaaa;
     --input-bg: #404040;
     --input-border: #555555;
-    /* [优化] 深色模式下的按钮悬停背景 */
     --btn-hover-bg: rgba(255, 255, 255, 0.1);
 }
 
@@ -51,7 +50,7 @@ body {
     background-color: var(--bg-color);
     color: var(--text-color);
     padding: 15px;
-    width: 340px;
+    width: 300px;
     transition: background-color 0.3s, color 0.3s;
 }
 
@@ -94,7 +93,6 @@ body {
     transition: background 0.2s;
 }
 
-/* [优化] 使用变量替代硬编码，删除了原本针对 body.dark-mode .icon-btn:hover 的冗余规则 */
 .icon-btn:hover {
     background-color: var(--btn-hover-bg);
 }
@@ -232,7 +230,7 @@ footer {
 .footer-link, .footer-ver {
     display: flex;
     align-items: center;
-    gap: 4px;
+    gap: 6px; /* 增加图标和文字的间距 */
     text-decoration: none;
     color: var(--secondary-color);
     transition: color 0.2s;
@@ -242,16 +240,12 @@ footer {
     color: var(--primary-color);
 }
 
+/* [新增] SVG 图标样式 */
 .footer-icon {
-    width: 14px;
-    height: 14px;
+    width: 16px; /* 调整大小以匹配截图 */
+    height: 16px;
+    fill: currentColor; /* 跟随文字颜色 */
 }
-
-/* 
-   ================================================================
-   [Fix] 修复部分 - Added by Code Assistant
-   ================================================================
-*/
 
 /* 修复：确保语言切换按钮在黑夜模式下可见 */
 body.dark-mode #toggle-lang {
