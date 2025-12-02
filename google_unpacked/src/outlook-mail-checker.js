@@ -1,10 +1,10 @@
 /**
  * ================================================================
  * Outlook Mail Checker - Content Script
- * ================================================================
- * Version: 1.0.0
- * Author: reyanmatic
- * Description: 清理广告、邮件计数、主题美化等核心功能
+ * Version: 1.0.3
+ * Author: Reyanmatic
+ * Date: 2025-12-02
+ * Description: Main logic for modifying Outlook interface.
  * ================================================================
  */
 
@@ -21,9 +21,9 @@ let addEmailCalculator = true;
 let emailCalculatorColor = '#C00000';
 let alignTitle = true;
 let addcustomBackground = true;
-let customBackground = '';
+// 默认背景图 (支持 GIF)
+let customBackground = 'https://raw.githubusercontent.com/iHub-2020/outlook-mail-checker/main/google_unpacked/icons/background_stars.jpg';
 let topbarTransparency = true;
-let supportAndRateButton = true;
 
 // ==================== 初始化 ====================
 const start = async () => {
@@ -49,13 +49,13 @@ const start = async () => {
 
 const runAllChecks = () => {
     cleanLeftRail();
-    removeAdsAndUpgradeEmails(); // 强力删除广告
+    removeAdsAndUpgradeEmails(); 
     cleanTopBarIcons();
     emailCalculator(); 
     alignFolderTitle();
     backgroundChanger();
     topbarTransparencyChanger();
-    addSupportAndRate();
+    // [已删除] addSupportAndRate(); 
 }
 
 startTimer = setInterval(start, 500);
@@ -76,7 +76,7 @@ chrome.storage.onChanged.addListener(function (changes) {
         case 'addcustomBackground': addcustomBackground = val; backgroundChanger(); break;
         case 'customBackground': customBackground = val; backgroundChanger(); break;
         case 'topbarTransparency': topbarTransparency = val; topbarTransparencyChanger(); break;
-        case 'supportAndRateButton': supportAndRateButton = val; addSupportAndRate(); break;
+        // [已删除] case 'supportAndRateButton': ...
     }
 })
 
@@ -89,7 +89,7 @@ const loadVariables = (value) => {
     addcustomBackground = value.addcustomBackground ?? addcustomBackground;
     customBackground = value.customBackground ?? customBackground;
     topbarTransparency = value.topbarTransparency ?? topbarTransparency;
-    supportAndRateButton = value.supportAndRateButton ?? supportAndRateButton;
+    // [已删除] supportAndRateButton
     emailCalculatorColor = value.emailCalculatorColor || '#C00000';
 }
 
@@ -105,8 +105,6 @@ const injectCustomStyles = () => {
     }
 
     if (hideFirstemailAd) {
-        // 辅助 CSS，隐藏常见的广告容器 ID
-        // 注意：这里只隐藏已知的静态ID，动态列表中的广告由JS处理
         styleEl.textContent = `
             #OwaContainer, [data-test-id="ad-rail"], ._1_... { display: none !important; }
         `;
@@ -115,60 +113,38 @@ const injectCustomStyles = () => {
     }
 };
 
-// ==================== 核心：强力删除广告 (优化版) ====================
+// ==================== 核心：强力删除广告 ====================
 const removeAdsAndUpgradeEmails = () => {
     if (!hideFirstemailAd) return;
 
-    // 策略变更：不要使用 remove()，因为这会破坏 Outlook 的虚拟列表索引，导致功能失效。
-    // 必须使用 style.display = 'none' 来隐藏。
-
-    // 1. 查找所有邮件行 (role="option" 或 draggable="true")
-    // 限制在主模块中查找，提高性能
     const mailList = document.querySelector('[role="listbox"]') || document.getElementById('MainModule');
     if (!mailList) return;
 
-    // 获取当前视图中的所有行
     const rows = mailList.querySelectorAll('[role="option"], [draggable="true"]');
 
     rows.forEach(row => {
-        // 如果已经隐藏了，跳过检查，节省性能
         if (row.style.display === 'none') return;
 
         const text = row.innerText || "";
-        
-        // 2. 特征识别：根据截图中的广告特征
-        // 特征 A: 包含 "Ad" 或 "广告" 的独立小标签
-        // 特征 B: 包含 "Upgrade Your Account" 或 "升级你的帐户"
-        // 特征 C: 包含 "Microsoft Outlook" 作为发件人且带有推广语
-        
         let isAd = false;
 
-        // 检查关键词
         if (text.includes("Upgrade Your Account") || 
             text.includes("升级你的帐户") || 
             text.includes("Get the latest premium")) {
             isAd = true;
         }
 
-        // 检查 "Ad" 徽标 (更精确的检查)
         if (!isAd) {
             const spans = row.querySelectorAll('span, div');
             for (let span of spans) {
-                // 只有两个字母 "Ad" 或 "广告"，且通常带有边框（可以通过长度判断）
                 const spanText = span.innerText.trim();
                 if ((spanText === "Ad" || spanText === "广告") && spanText.length === text.length) {
-                    // 如果整行只有 Ad 两个字，那肯定是错的，这里指子元素
                 }
-                // 检查是否是那个小小的 Ad 框
                 if (/^(Ad|广告)$/.test(spanText)) {
-                    // 再次确认上下文，避免误伤正文中包含 "Ad" 的邮件
-                    // 广告行的结构通常比较简单，或者 aria-label 包含 Upgrade
                     if (row.getAttribute('aria-label')?.includes('Upgrade') || text.includes('Microsoft')) {
                         isAd = true;
                         break;
                     }
-                    
-                    // 针对截图中的样式：Ad 旁边通常紧挨着 Microsoft Outlook
                     if (text.includes("Microsoft Outlook")) {
                          isAd = true;
                          break;
@@ -177,20 +153,17 @@ const removeAdsAndUpgradeEmails = () => {
             }
         }
 
-        // 3. 执行隐藏 (而不是删除)
         if (isAd) {
-            row.style.display = 'none'; // 关键修改：隐藏而非删除
-            row.style.visibility = 'hidden'; // 双重保险
-            row.setAttribute('data-outlook-plus-hidden', 'true'); // 标记已处理
+            row.style.display = 'none';
+            row.style.visibility = 'hidden';
+            row.setAttribute('data-outlook-plus-hidden', 'true');
         }
     });
 
-    // 4. 处理顶部横幅 (Banner)
     const topBanners = document.querySelectorAll('div[aria-label*="Upgrade"], div[aria-label*="升级"]');
     topBanners.forEach(banner => {
-        // 排除按钮
         if (banner.getAttribute('role') !== 'button' && !banner.querySelector('input')) {
-            banner.style.display = 'none'; // 同样改为隐藏
+            banner.style.display = 'none';
         }
     });
 }
@@ -205,12 +178,10 @@ const emailCalculator = () => {
     }
 
     let unreadCount = 0;
-    // 优先从网页标题获取，最准确
     const titleMatch = document.title.match(/\((\d+)\)/);
     if (titleMatch) {
         unreadCount = parseInt(titleMatch[1]);
     } else {
-        // 备用：查找左侧树
         const folders = document.querySelectorAll('[title*="Inbox"], [title*="收件箱"]');
         for (let folder of folders) {
             const container = folder.closest('div[role="treeitem"]');
@@ -262,10 +233,10 @@ const cleanTopBarIcons = () => {
 };
 
 const backgroundChanger = () => {
-    const backgroundNav = document.getElementById('O365_NavHeader') || document.querySelector('.o365sx-navbar');
+    const backgroundNav = document.getElementById('O365_NavHeader') || document.querySelector('.o365sx-navbar') || document.querySelector('[role="banner"]');
     if (backgroundNav) {
         if (addcustomBackground && customBackground) {
-            backgroundNav.style.backgroundImage = `url("${customBackground}")`;
+            backgroundNav.style.setProperty('background-image', `url("${customBackground}")`, 'important');
             backgroundNav.style.backgroundPosition = 'center';
             backgroundNav.style.backgroundSize = 'cover';
         } else {
@@ -275,7 +246,7 @@ const backgroundChanger = () => {
 }
 
 const topbarTransparencyChanger = () => {
-    const header = document.getElementById('O365_NavHeader') || document.querySelector('.o365sx-navbar');
+    const header = document.getElementById('O365_NavHeader') || document.querySelector('.o365sx-navbar') || document.querySelector('[role="banner"]');
     if (header) {
         if (topbarTransparency) {
             header.style.backgroundColor = 'rgba(0,0,0,0.2)';
@@ -284,39 +255,5 @@ const topbarTransparencyChanger = () => {
             header.style.backgroundColor = '';
             header.style.backdropFilter = '';
         }
-    }
-}
-
-// ==================== 支持按钮 ====================
-const addSupportAndRate = () => {
-    const btnId = 'custom-rate-btn';
-    const existingBtn = document.getElementById(btnId);
-
-    if (!supportAndRateButton) {
-        if (existingBtn) existingBtn.style.display = 'none';
-        return;
-    }
-
-    if (existingBtn) {
-        existingBtn.style.display = 'flex';
-        return;
-    }
-
-    const headerRegion = document.querySelector('.o365sx-rightNavbar') || document.getElementById('headerButtonsRegionId');
-    if (headerRegion) {
-        const div = document.createElement('div');
-        div.id = btnId;
-        div.style.display = 'flex';
-        div.style.alignItems = 'center';
-        div.style.marginRight = '10px';
-        div.style.cursor = 'pointer';
-        
-        const imgUrl = chrome.runtime.getURL('icons/stars_rating.png');
-        
-        div.innerHTML = `<a href="https://chromewebstore.google.com/" target="_blank" title="Rate Us">
-            <img src="${imgUrl}" style="height: 20px; width: auto;" alt="Rate">
-        </a>`;
-        
-        headerRegion.prepend(div);
     }
 }
