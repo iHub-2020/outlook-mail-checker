@@ -87,10 +87,10 @@ Based on [Outlook Web Plus](https://github.com/rztprog/outlook-web-plus) by Rztp
 ### 预览
 
 **使用前：**
-![Before](https://addons.mozilla.org/user-media/previews/full/289/289012.png)
+![Before](https://raw.githubusercontent.com/iHub-2020/outlook-mail-checker/main/google_unpacked/icons/before.png)
 
 **使用后：**
-![After](https://addons.mozilla.org/user-media/previews/full/289/289797.png)
+![After](https://raw.githubusercontent.com/iHub-2020/outlook-mail-checker/main/google_unpacked/icons/after.png)
 
 ### 安装指南
 
