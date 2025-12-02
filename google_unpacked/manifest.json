@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Outlook Mail Checker",
-  "version": "1.0.1",
+  "version": "1.0.3",
   "description": "增强版 Outlook 网页邮件检查器，支持广告拦截、主题定制、未读计数等功能",
   
   "default_locale": "en",
@@ -54,3 +54,4 @@
     }
   ]
 }
+
