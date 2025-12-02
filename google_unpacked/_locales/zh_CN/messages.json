@@ -5,7 +5,7 @@
     "btn_open_outlook": {"message": "打开 Outlook"},
     "btn_open_calendar": {"message": "打开日历"},
 
-    "section_ads": {"message": "广告拦截"},
+    "section_ads": {"message": "隐藏开关"},
     "lbl_hide_first_ad": {"message": "删除首封邮件广告 (升级提示)"},
     "lbl_hide_meet_icons": {"message": "隐藏 Meet, Teams, OneNote 图标"},
     "lbl_hide_left_rail": {"message": "隐藏左侧应用侧边栏"},
